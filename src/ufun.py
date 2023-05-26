@@ -13,6 +13,7 @@ from scipy.linalg import det, qr
 import math
 from scipy.linalg import svd
 from scipy.stats import rv_discrete
+import time
 
 
 ### Functions to Fix Matrix size
@@ -41,9 +42,15 @@ def kernel_pca_kmeans(matrix,n_components,n_clusters):
 			matrix = np.array([[0,0],[1,0],[0,1],[1,1]])
 			kernel_pca_kmeans(matrix,2,2)
 	'''
+	start_pca = time.time()
 	transformer = KernelPCA(n_components=n_components, kernel='linear')
 	reduced_matrix = transformer.fit_transform(matrix)
+	end_pca = time.time() - start_pca
+	print("Time to perform PCA: ", end_pca)
+	start_kmeans = time.time()
 	kmeans = KMeans(n_clusters=n_clusters, random_state=0, n_init="auto").fit(reduced_matrix)
+	end_kmeans = time.time() - start_kmeans
+	print("Time to perform KMeans: ", end_kmeans)
 	return_val = kmeans.cluster_centers_
 	del(transformer)
 	del(reduced_matrix)
