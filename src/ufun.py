@@ -43,7 +43,7 @@ def kernel_pca_kmeans(matrix,n_components,n_clusters):
 			kernel_pca_kmeans(matrix,2,2)
 	'''
 	start_pca = time.time()
-	transformer = KernelPCA(n_components=n_components, kernel='linear')
+	transformer = KernelPCA(n_components=n_components, kernel='linear',eigen_solver='randomized')
 	reduced_matrix = transformer.fit_transform(matrix)
 	end_pca = time.time() - start_pca
 	print("Time to perform PCA: ", end_pca)
