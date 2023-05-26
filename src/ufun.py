@@ -89,7 +89,7 @@ def gram_calculate_volume(simplex):
     # Calculate the volume
     return np.sqrt(np.abs(det(gram_matrix))) / math.factorial(simplex.shape[0]-1)
 
-def find_largest_simplex(matrix):
+def find_largest_simplex(matrix,k):
 	'''
 	Find the largest simplex in a set of points
 
@@ -113,7 +113,7 @@ def find_largest_simplex(matrix):
 	simplex = [x0, x1]
 	simplex_matrix = matrix[simplex]
 	oreder_indicies = []
-	while True:
+	for _ in range(k):
 		max_volume = 0
 		for i in range(n):
 			if i in simplex:
@@ -126,7 +126,7 @@ def find_largest_simplex(matrix):
 				max_volume_index = i
 		simplex_matrix = np.vstack([simplex_matrix, matrix[max_volume_index]])
 		order_indicies.append(max_volume_index)
-	return order_indicies
+	return matrix[order_indicies]
 
 def get_simplex_projection(row, simplex):
 	# Solves ax=b to find the projection of col onto the simplex
