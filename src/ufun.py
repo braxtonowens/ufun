@@ -44,7 +44,11 @@ def kernel_pca_kmeans(matrix,n_components,n_clusters):
 	transformer = KernelPCA(n_components=n_components, kernel='linear')
 	reduced_matrix = transformer.fit_transform(matrix)
 	kmeans = KMeans(n_clusters=n_clusters, random_state=0, n_init="auto").fit(reduced_matrix)
-	return(kmeans.cluster_centers_)
+	return_val = kmeans.cluster_centers_
+	del(transformer)
+	del(reduced_matrix)
+	del(kmeans)
+	return(return_val)
 
 
 def pca_kmeans(matrix,n_components,n_clusters):
