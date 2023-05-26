@@ -46,11 +46,11 @@ def kernel_pca_kmeans(matrix,n_components,n_clusters):
 	transformer = KernelPCA(n_components=n_components, kernel='linear',eigen_solver='randomized')
 	reduced_matrix = transformer.fit_transform(matrix)
 	end_pca = time.time() - start_pca
-	print("Time to perform PCA: ", end_pca)
+	#print("Time to perform PCA: ", end_pca)
 	start_kmeans = time.time()
 	kmeans = KMeans(n_clusters=n_clusters, random_state=0, n_init="auto").fit(reduced_matrix)
 	end_kmeans = time.time() - start_kmeans
-	print("Time to perform KMeans: ", end_kmeans)
+	#print("Time to perform KMeans: ", end_kmeans)
 	return_val = kmeans.cluster_centers_
 	del(transformer)
 	del(reduced_matrix)
