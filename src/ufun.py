@@ -124,6 +124,7 @@ def find_largest_simplex(matrix,k):
 	simplex = [x0, x1]
 	simplex_matrix = matrix[simplex]
 	oreder_indicies = []
+	n=matrix.shape[0]
 	for _ in range(k):
 		max_volume = 0
 		for i in range(n):
