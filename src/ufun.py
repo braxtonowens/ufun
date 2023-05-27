@@ -123,7 +123,7 @@ def find_largest_simplex(matrix,k):
 	x0, x1 = find_furthest_rows(matrix)
 	simplex = [x0, x1]
 	simplex_matrix = matrix[simplex]
-	oreder_indicies = []
+	order_indicies = []
 	n=matrix.shape[0]
 	for _ in range(k):
 		max_volume = 0
