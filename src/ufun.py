@@ -89,6 +89,20 @@ def gram_calculate_volume(simplex):
     # Calculate the volume
     return np.sqrt(np.abs(det(gram_matrix))) / math.factorial(simplex.shape[0]-1)
 
+def find_furthest_rows(A):
+    # Calculate the pairwise distances
+    distances = pdist(A, 'euclidean')
+    # Get the index of the maximum distance
+    max_idx = np.argmax(distances)
+    # Calculate the total number of elements in the distance matrix
+    n = len(distances)
+    # Calculate the number of rows in the original matrix
+    m = int((-1 + np.sqrt(1 + 8 * n)) // 2) + 1
+    # Convert the index in the condensed distance matrix to indices in the original matrix
+    i = m - 2 - int((np.sqrt(-8 * max_idx + 4 * m * (m - 1) - 7) - 1) // 2)
+    j = int(max_idx + i + 1 - m * (m - 1) // 2 + (m - i) * ((m - i) - 1) // 2)
+    return i, j
+
 def find_largest_simplex(matrix,k):
 	'''
 	Find the largest simplex in a set of points
@@ -106,10 +120,7 @@ def find_largest_simplex(matrix,k):
 			find_largest_simplex(matrix)
 	'''
 	matrix = np.asarray(matrix)
-	n = len(matrix)
-	# Start by identifying the two environments characterized by the largest distance
-	distances = squareform(pdist(matrix, 'euclidean'))
-	x0, x1 = np.unravel_index(np.argmax(distances), distances.shape)
+	x0, x1 = find_furthest_rows(matrix)
 	simplex = [x0, x1]
 	simplex_matrix = matrix[simplex]
 	oreder_indicies = []
